@@ -1,10 +1,387 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-    <title>Meu Portfólio</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gabryel Argondizzi | Portfólio</title>
+  <meta name="description" content="Portfólio de Gabryel Argondizzi - Técnico em Informática, estudante de Segurança do Trabalho e entusiasta de tecnologia, automação e desenvolvimento.">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    header {
+      background: linear-gradient(135deg, #0f172a, #1e293b, #334155);
+      padding: 80px 0 60px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .hero {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+    }
+
+    .hero-text {
+      flex: 1 1 500px;
+    }
+
+    .hero-text h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+      color: #f8fafc;
+    }
+
+    .hero-text h2 {
+      font-size: 1.2rem;
+      font-weight: normal;
+      color: #38bdf8;
+      margin-bottom: 20px;
+    }
+
+    .hero-text p {
+      font-size: 1rem;
+      color: #cbd5e1;
+      max-width: 700px;
+      margin-bottom: 25px;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .btn {
+      padding: 12px 22px;
+      border-radius: 10px;
+      font-weight: bold;
+      transition: 0.3s;
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background: #38bdf8;
+      color: #0f172a;
+    }
+
+    .btn-primary:hover {
+      background: #0ea5e9;
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      border: 1px solid #38bdf8;
+      color: #38bdf8;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(56, 189, 248, 0.1);
+      transform: translateY(-2px);
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(15, 23, 42, 0.95);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(8px);
+    }
+
+    nav .container {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      padding: 15px 0;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: #cbd5e1;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: #38bdf8;
+    }
+
+    section {
+      padding: 70px 0;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      color: #38bdf8;
+      margin-bottom: 25px;
+      text-align: center;
+    }
+
+    .card {
+      background: #1e293b;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.20);
+    }
+
+    .about p {
+      color: #cbd5e1;
+      text-align: center;
+      max-width: 850px;
+      margin: auto;
+    }
+
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .skill {
+      background: #0f172a;
+      color: #38bdf8;
+      border: 1px solid rgba(56,189,248,0.25);
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-weight: bold;
+      font-size: 0.95rem;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 22px;
+    }
+
+    .project-card {
+      background: #1e293b;
+      border-radius: 18px;
+      padding: 24px;
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: 0.3s;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.20);
+    }
+
+    .project-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(56,189,248,0.30);
+    }
+
+    .project-card h3 {
+      color: #f8fafc;
+      margin-bottom: 12px;
+      font-size: 1.2rem;
+    }
+
+    .project-card p {
+      color: #cbd5e1;
+      margin-bottom: 18px;
+      font-size: 0.96rem;
+    }
+
+    .project-links {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .project-links a {
+      color: #38bdf8;
+      font-weight: bold;
+      font-size: 0.95rem;
+    }
+
+    .contact-box {
+      text-align: center;
+    }
+
+    .contact-box p {
+      color: #cbd5e1;
+      margin-bottom: 20px;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    footer {
+      padding: 25px 0;
+      text-align: center;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      color: #94a3b8;
+      background: #0b1120;
+    }
+
+    @media (max-width: 768px) {
+      .hero-text h1 {
+        font-size: 2.2rem;
+      }
+
+      .hero-text h2 {
+        font-size: 1rem;
+      }
+
+      nav .container {
+        gap: 15px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <h1>Gabryel Argondizzi</h1>
-    <p>Meu portfólio no GitHub Pages.</p>
+
+  <header>
+    <div class="container hero">
+      <div class="hero-text">
+        <h1>Gabryel Argondizzi</h1>
+        <h2>Técnico em Informática • Estudante de Segurança do Trabalho • Tecnologia e Automação</h2>
+        <p>
+          Sou apaixonado por tecnologia, programação, automação e desenvolvimento de soluções práticas.
+          Este portfólio reúne meus projetos, conhecimentos e minha evolução profissional na área de TI.
+        </p>
+        <div class="buttons">
+          <a href="#projetos" class="btn btn-primary">Ver projetos</a>
+          <a href="#contato" class="btn btn-secondary">Entrar em contato</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <div class="container">
+      <a href="#sobre">Sobre</a>
+      <a href="#habilidades">Habilidades</a>
+      <a href="#projetos">Projetos</a>
+      <a href="#contato">Contato</a>
+    </div>
+  </nav>
+
+  <section id="sobre">
+    <div class="container">
+      <h2 class="section-title">Sobre mim</h2>
+      <div class="card about">
+        <p>
+          Sou formado em Técnico em Informática e atualmente curso Técnico em Segurança do Trabalho.
+          Tenho interesse em desenvolvimento, lógica de programação, banco de dados, automação e tecnologia em geral.
+          Busco sempre aprender novas ferramentas, melhorar minhas habilidades e desenvolver projetos que demonstrem meu crescimento profissional.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="habilidades">
+    <div class="container">
+      <h2 class="section-title">Habilidades</h2>
+      <div class="card">
+        <div class="skills">
+          <span class="skill">Lógica de Programação</span>
+          <span class="skill">Python</span>
+          <span class="skill">Banco de Dados</span>
+          <span class="skill">Git e GitHub</span>
+          <span class="skill">Automação</span>
+          <span class="skill">Desenvolvimento de Sistemas</span>
+          <span class="skill">Hardware e Software</span>
+          <span class="skill">Resolução de Problemas</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projetos">
+    <div class="container">
+      <h2 class="section-title">Projetos</h2>
+      <div class="projects-grid">
+
+        <div class="project-card">
+          <h3>Sistema em Python</h3>
+          <p>
+            Projeto voltado para cadastro, organização de informações e prática de lógica de programação.
+          </p>
+          <div class="project-links">
+            <a href="https://github.com/SEU-USUARIO/sistema-python" target="_blank">Código</a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <h3>Automação de Tarefas</h3>
+          <p>
+            Scripts criados para automatizar tarefas simples e melhorar a produtividade em processos do dia a dia.
+          </p>
+          <div class="project-links">
+            <a href="https://github.com/SEU-USUARIO/automacao" target="_blank">Código</a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <h3>Banco de Dados</h3>
+          <p>
+            Estudos e práticas com modelagem, consultas e gerenciamento de informações em banco de dados.
+          </p>
+          <div class="project-links">
+            <a href="https://github.com/SEU-USUARIO/banco-de-dados" target="_blank">Código</a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <h3>Portfólio Web</h3>
+          <p>
+            Site pessoal desenvolvido para apresentar meu perfil profissional, minhas habilidades e meus projetos.
+          </p>
+          <div class="project-links">
+            <a href="https://github.com/SEU-USUARIO/SEU-USUARIO.github.io" target="_blank">Código</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="contato">
+    <div class="container">
+      <h2 class="section-title">Contato</h2>
+      <div class="card contact-box">
+        <p>Você pode entrar em contato comigo pelos links abaixo:</p>
+        <div class="contact-links">
+          <a class="btn btn-primary" href="Email:gabryelpontes.ti@gmail.com">E-mail</a>
+          <a class="btn btn-secondary" href="https://github.com/hjzqm7ypyw-stack" target="_blank">GitHub</a>
+          <a class="btn btn-secondary" href="https://www.linkedin.com/in/gabryel-pontes-07122002g" target="_blank">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 - Gabryel Argondizzi. Todos os direitos reservados.</p>
+  </footer>
+
 </body>
 </html>
