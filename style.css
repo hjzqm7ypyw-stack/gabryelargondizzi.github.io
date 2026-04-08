@@ -7,19 +7,19 @@
   scroll-behavior:smooth;
 }
 
-/* CORES */
+/* 🎨 NOVAS CORES */
 :root{
-  --preto:#000000;
-  --branco:#ffffff;
-  --laranja:#ff6b00;
-  --azul:#007bff;
-  --cinza:#f2f2f2;
+  --preto:#0a0a0f;
+  --branco:#f8fafc;
+  --roxo:#7c3aed;
+  --azul:#22d3ee;
+  --cinza:#1e293b;
 }
 
 /* BODY */
 body{
-  background:var(--branco);
-  color:var(--preto);
+  background:var(--preto);
+  color:var(--branco);
 }
 
 /* CONTAINER */
@@ -29,31 +29,30 @@ body{
   margin:auto;
 }
 
-/* HEADER (HERO) */
+/* HEADER */
 header{
   min-height:100vh;
   display:flex;
   align-items:center;
   justify-content:center;
   text-align:center;
-  background:linear-gradient(135deg,var(--azul),var(--preto));
-  color:var(--branco);
-  animation:fadeUp 1s ease;
+  background:linear-gradient(135deg,var(--roxo),var(--preto));
 }
 
+/* NOME */
 .hero-text h1{
   font-size:3rem;
 
-  background: linear-gradient(90deg, var(--azul), var(--laranja), var(--azul));
+  background: linear-gradient(90deg, var(--azul), var(--roxo), var(--azul));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-size:300% auto;
-  animation:gradientSlow 8s linear infinite;
+  animation:gradientSlow 6s linear infinite;
 }
 
 .hero-text h2{
   margin:15px 0;
-  color:#ddd;
+  color:#cbd5f5;
 }
 
 .hero-text p{
@@ -70,14 +69,14 @@ header{
 
 .btn{
   padding:12px 25px;
-  border-radius:5px;
+  border-radius:10px;
   font-weight:bold;
   transition:.3s;
 }
 
 /* BOTÃO PRINCIPAL */
 .btn-primary{
-  background:var(--laranja);
+  background:var(--roxo);
   color:#fff;
 }
 
@@ -88,23 +87,21 @@ header{
 
 /* BOTÃO SECUNDÁRIO */
 .btn-secondary{
-  border:2px solid var(--laranja);
-  color:var(--laranja);
+  border:2px solid var(--azul);
+  color:var(--azul);
 }
 
 .btn-secondary:hover{
-  background:var(--laranja);
-  color:#fff;
+  background:var(--azul);
+  color:#000;
 }
 
-/* NAVBAR */
+/* NAV */
 nav{
   position:sticky;
   top:0;
-  background:#000;
+  background:#020617;
   padding:15px 0;
-  z-index:1000;
-  animation:slideDown 1s ease;
 }
 
 nav .container{
@@ -114,52 +111,32 @@ nav .container{
 }
 
 nav a{
-  position:relative;
   font-weight:bold;
-
-  background: linear-gradient(90deg, var(--azul), var(--laranja));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* LINHA HOVER */
-nav a::after{
-  content:"";
-  position:absolute;
-  left:0;
-  bottom:-5px;
-  width:0%;
-  height:2px;
-  background:linear-gradient(90deg,var(--azul),var(--laranja));
+  color:var(--branco);
   transition:.3s;
 }
 
-nav a:hover::after{
-  width:100%;
+nav a:hover{
+  color:var(--azul);
 }
 
 /* SECTIONS */
 section{
   padding:60px 0;
   text-align:center;
-  animation:fadeUp 1s ease;
 }
 
 .section-title{
   font-size:2rem;
   margin-bottom:25px;
-
-  background: linear-gradient(90deg, var(--azul), var(--laranja));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color:var(--azul);
 }
 
-/* CARD GERAL */
+/* CARDS */
 .card{
   background:var(--cinza);
   padding:25px;
-  border-radius:10px;
-  color:var(--preto);
+  border-radius:15px;
 }
 
 /* SKILLS */
@@ -171,10 +148,10 @@ section{
 }
 
 .skills span{
-  background:#fff;
+  background:#020617;
   padding:10px 15px;
   border-radius:20px;
-  border:1px solid #ddd;
+  border:1px solid var(--azul);
 }
 
 /* PROJETOS */
@@ -184,25 +161,22 @@ section{
   gap:20px;
 }
 
-/* CARD PROJETO */
 .project-card{
   background:var(--cinza);
   padding:20px;
-  border-radius:10px;
-  transition:.4s;
-  color:var(--preto);
+  border-radius:15px;
+  transition:.3s;
 }
 
 .project-card:hover{
-  transform:translateY(-10px) scale(1.05);
-  background:linear-gradient(135deg,var(--laranja),var(--azul));
-  color:#fff;
+  transform:translateY(-8px) scale(1.03);
+  background:linear-gradient(135deg,var(--roxo),var(--azul));
 }
 
-/* LINKS PROJETO */
+/* LINKS */
 .project-links a{
-  font-weight:bold;
   color:var(--azul);
+  font-weight:bold;
 }
 
 .project-card:hover .project-links a{
@@ -219,23 +193,13 @@ section{
 
 /* FOOTER */
 footer{
-  background:linear-gradient(90deg,var(--laranja),var(--azul));
+  background:linear-gradient(90deg,var(--roxo),var(--azul));
   text-align:center;
   padding:20px;
   color:#fff;
 }
 
-/* ANIMAÇÕES */
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(30px);}
-  to{opacity:1;transform:translateY(0);}
-}
-
-@keyframes slideDown{
-  from{transform:translateY(-100%);}
-  to{transform:translateY(0);}
-}
-
+/* ANIMAÇÃO */
 @keyframes gradientSlow{
   0%{background-position:0% center;}
   100%{background-position:300% center;}
