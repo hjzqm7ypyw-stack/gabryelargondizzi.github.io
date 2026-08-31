@@ -16,6 +16,9 @@
     --ochre-dark:#8f7118;
     --rust:#b3503f;
     --rust-dark:#7d3527;
+    --slate:#4f6a83;
+    --sage:#6b8f5e;
+    --plum:#7d6b96;
     --text-on-paper:#2c2a22;
     --text-dim:#8a9099;
   }
@@ -136,13 +139,31 @@
     border:1px solid #3a4552;
   }
   .fn:hover{ color:var(--paper); border-color:#57657a; }
+  .erase{
+    background:var(--slate);
+    color:#e8eff5;
+    border:none;
+    font-size:15px;
+  }
+  .erase:hover{ background:#5d7c99; }
+  .percent{
+    background:var(--sage);
+    color:#eef4e9;
+    border:none;
+  }
+  .percent:hover{ background:#7c9d6d; }
+  .clear{
+    background:var(--plum);
+    color:#f1eef6;
+    border:none;
+  }
+  .clear:hover{ background:#8c78ab; }
   .zero{
     grid-column:span 2;
   }
   .eq{
     background:var(--rust);
     color:#fbe9e4;
-    grid-column:span 2;
   }
   .eq:hover{ background:#c25a47; }
 </style>
@@ -158,9 +179,9 @@
     <div class="current" id="display">0</div>
   </div>
   <div class="keys">
-    <button class="key fn" data-action="clear">AC</button>
-    <button class="key fn" data-action="back">⌫</button>
-    <button class="key fn" data-action="percent">%</button>
+    <button class="key fn clear" data-action="clear">AC</button>
+    <button class="key fn erase" data-action="back">⌫</button>
+    <button class="key fn percent" data-action="percent">%</button>
     <button class="key op" data-op="÷">÷</button>
 
     <button class="key num" data-num="7">7</button>
@@ -191,7 +212,7 @@
   let current = '0';
   let previous = null;
   let operator = null;
-  let justEvaluated = false;
+  let startNew = false;
 
   function fmt(n){
     if (!isFinite(n)) return 'erro';
@@ -208,9 +229,9 @@
   }
 
   function inputNum(d){
-    if (justEvaluated){
+    if (startNew){
       current = d === '.' ? '0.' : d;
-      justEvaluated = false;
+      startNew = false;
       render();
       return;
     }
@@ -221,7 +242,7 @@
   }
 
   function backspace(){
-    if (justEvaluated) return;
+    if (startNew) return;
     current = current.length > 1 ? current.slice(0,-1) : '0';
     render();
   }
@@ -230,7 +251,7 @@
     current = '0';
     previous = null;
     operator = null;
-    justEvaluated = false;
+    startNew = false;
     render();
   }
 
@@ -249,14 +270,14 @@
   }
 
   function setOperator(op){
-    if (operator && !justEvaluated){
+    if (operator && !startNew){
       previous = compute(previous, parseFloat(current), operator);
       current = fmt(previous);
     } else {
       previous = parseFloat(current);
     }
     operator = op;
-    justEvaluated = false;
+    startNew = true;
     render();
   }
 
@@ -267,7 +288,7 @@
     current = fmt(result);
     previous = null;
     operator = null;
-    justEvaluated = true;
+    startNew = true;
     displayEl.textContent = current;
   }
 
