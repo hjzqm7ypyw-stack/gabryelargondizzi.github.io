@@ -6,15 +6,33 @@
   <title>Gabryel Argondizzi | Portfólio</title>
 
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* Estilo rápido para fixar a logo no canto superior esquerdo */
+    .top-left-logo {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 100;
+    }
+    .top-left-logo img {
+      width: 120px;
+      height: auto;
+    }
+    header {
+      position: relative;
+    }
+  </style>
 </head>
 <body>
 
+  <!-- LOGO NO CANTO SUPERIOR ESQUERDO -->
+  <div class="top-left-logo">
+    <img src="Logotipo Tech Nexo.png" alt="Logo Tech Nexo">
+  </div>
+
   <!-- HEADER -->
   <header>
-    <div class="container hero" style="display: flex; align-items: center; gap: 30px;">
-      <div class="hero-logo">
-        <img src="Logotipo Tech Nexo.png" alt="Logo Tech Nexo" style="width: 180px;">
-      </div>
+    <div class="container hero">
       <div class="hero-text">
         <h1>Gabryel Argondizzi</h1>
         <h2>Técnico em Informática • Tecnologia e Automação</h2>
