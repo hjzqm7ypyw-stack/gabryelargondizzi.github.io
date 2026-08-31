@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Calculadora | Gabryel Argondizzi</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1b2430;
+    --ink-2:#242f3f;
+    --paper:#f2eee3;
+    --paper-dim:#e4dfcf;
+    --ochre:#c9a227;
+    --ochre-dark:#8f7118;
+    --rust:#b3503f;
+    --rust-dark:#7d3527;
+    --text-on-paper:#2c2a22;
+    --text-dim:#8a9099;
+  }
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0;
+    min-height:100vh;
+    background:var(--ink);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    font-family:'IBM Plex Sans',sans-serif;
+    padding:32px 16px;
+  }
+  .back{
+    color:var(--text-dim);
+    text-decoration:none;
+    font-size:13px;
+    margin-bottom:16px;
+    width:320px;
+    display:block;
+  }
+  .back:hover{ color:var(--paper); }
+  .machine{
+    width:320px;
+    background:var(--ink-2);
+    border-radius:6px;
+    padding:18px 18px 22px;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset, 0 20px 40px rgba(0,0,0,0.35);
+  }
+  .brand{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    padding:0 4px 14px;
+    color:var(--text-dim);
+    font-size:11px;
+    letter-spacing:0.02em;
+  }
+  .brand b{
+    color:var(--paper);
+    font-weight:600;
+    font-size:13px;
+  }
+  .tape{
+    background:var(--paper);
+    border-radius:3px;
+    padding:16px 16px 14px;
+    position:relative;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.25) inset;
+  }
+  .tape::before{
+    content:"";
+    position:absolute;
+    top:0; left:16px; right:16px;
+    height:1px;
+    background: repeating-linear-gradient(90deg, var(--paper-dim) 0 6px, transparent 6px 10px);
+  }
+  .history{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;
+    color:#8f8a76;
+    min-height:20px;
+    text-align:right;
+    letter-spacing:0.01em;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .current{
+    font-family:'IBM Plex Mono',monospace;
+    font-weight:600;
+    font-size:34px;
+    color:var(--text-on-paper);
+    text-align:right;
+    margin-top:6px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:clip;
+    direction:rtl;
+  }
+  .keys{
+    margin-top:14px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:8px;
+  }
+  button.key{
+    border:none;
+    font-family:'IBM Plex Sans',sans-serif;
+    font-weight:500;
+    font-size:16px;
+    height:52px;
+    border-radius:4px;
+    cursor:pointer;
+    transition:transform 0.06s ease;
+    color:var(--text-on-paper);
+  }
+  button.key:active{
+    transform:scale(0.94);
+  }
+  .num{
+    background:var(--paper);
+  }
+  .num:hover{ background:#fbf8f0; }
+  .op{
+    background:var(--ochre);
+    color:#3a2e07;
+    border-radius:50%;
+    font-size:17px;
+  }
+  .op:hover{ background:#d6ac2c; }
+  .fn{
+    background:transparent;
+    color:var(--text-dim);
+    font-size:14px;
+    border:1px solid #3a4552;
+  }
+  .fn:hover{ color:var(--paper); border-color:#57657a; }
+  .zero{
+    grid-column:span 2;
+  }
+  .eq{
+    background:var(--rust);
+    color:#fbe9e4;
+    grid-column:span 2;
+  }
+  .eq:hover{ background:#c25a47; }
+</style>
+</head>
+<body>
+
+<a class="back" href="index.html">&larr; voltar ao portfólio</a>
+
+<div class="machine">
+  <div class="brand"><b>Somadora</b><span>mod. 07</span></div>
+  <div class="tape">
+    <div class="history" id="history">&nbsp;</div>
+    <div class="current" id="display">0</div>
+  </div>
+  <div class="keys">
+    <button class="key fn" data-action="clear">AC</button>
+    <button class="key fn" data-action="back">⌫</button>
+    <button class="key fn" data-action="percent">%</button>
+    <button class="key op" data-op="÷">÷</button>
+
+    <button class="key num" data-num="7">7</button>
+    <button class="key num" data-num="8">8</button>
+    <button class="key num" data-num="9">9</button>
+    <button class="key op" data-op="×">×</button>
+
+    <button class="key num" data-num="4">4</button>
+    <button class="key num" data-num="5">5</button>
+    <button class="key num" data-num="6">6</button>
+    <button class="key op" data-op="−">−</button>
+
+    <button class="key num" data-num="1">1</button>
+    <button class="key num" data-num="2">2</button>
+    <button class="key num" data-num="3">3</button>
+    <button class="key op" data-op="+">+</button>
+
+    <button class="key num zero" data-num="0">0</button>
+    <button class="key num" data-num=".">.</button>
+    <button class="key eq" data-action="equals">=</button>
+  </div>
+</div>
+
+<script>
+  const displayEl = document.getElementById('display');
+  const historyEl = document.getElementById('history');
+
+  let current = '0';
+  let previous = null;
+  let operator = null;
+  let justEvaluated = false;
+
+  function fmt(n){
+    if (!isFinite(n)) return 'erro';
+    let s = n.toString();
+    if (s.length > 12) s = parseFloat(n.toPrecision(10)).toString();
+    return s;
+  }
+
+  function render(){
+    displayEl.textContent = current;
+    historyEl.textContent = previous !== null && operator
+      ? `${fmt(previous)} ${operator}`
+      : '\u00a0';
+  }
+
+  function inputNum(d){
+    if (justEvaluated){
+      current = d === '.' ? '0.' : d;
+      justEvaluated = false;
+      render();
+      return;
+    }
+    if (d === '.' && current.includes('.')) return;
+    if (current === '0' && d !== '.') current = d;
+    else current += d;
+    render();
+  }
+
+  function backspace(){
+    if (justEvaluated) return;
+    current = current.length > 1 ? current.slice(0,-1) : '0';
+    render();
+  }
+
+  function clearAll(){
+    current = '0';
+    previous = null;
+    operator = null;
+    justEvaluated = false;
+    render();
+  }
+
+  function percent(){
+    current = fmt(parseFloat(current) / 100);
+    render();
+  }
+
+  function compute(a,b,op){
+    switch(op){
+      case '+': return a+b;
+      case '−': return a-b;
+      case '×': return a*b;
+      case '÷': return b === 0 ? Infinity : a/b;
+    }
+  }
+
+  function setOperator(op){
+    if (operator && !justEvaluated){
+      previous = compute(previous, parseFloat(current), operator);
+      current = fmt(previous);
+    } else {
+      previous = parseFloat(current);
+    }
+    operator = op;
+    justEvaluated = false;
+    render();
+  }
+
+  function equals(){
+    if (operator === null) return;
+    const result = compute(previous, parseFloat(current), operator);
+    historyEl.textContent = `${fmt(previous)} ${operator} ${current} =`;
+    current = fmt(result);
+    previous = null;
+    operator = null;
+    justEvaluated = true;
+    displayEl.textContent = current;
+  }
+
+  document.querySelectorAll('[data-num]').forEach(btn=>{
+    btn.addEventListener('click', ()=> inputNum(btn.dataset.num));
+  });
+  document.querySelectorAll('[data-op]').forEach(btn=>{
+    btn.addEventListener('click', ()=> setOperator(btn.dataset.op));
+  });
+  document.querySelector('[data-action="clear"]').addEventListener('click', clearAll);
+  document.querySelector('[data-action="back"]').addEventListener('click', backspace);
+  document.querySelector('[data-action="percent"]').addEventListener('click', percent);
+  document.querySelector('[data-action="equals"]').addEventListener('click', equals);
+
+  window.addEventListener('keydown', (e)=>{
+    if (e.key >= '0' && e.key <= '9') inputNum(e.key);
+    else if (e.key === '.') inputNum('.');
+    else if (e.key === '+') setOperator('+');
+    else if (e.key === '-') setOperator('−');
+    else if (e.key === '*') setOperator('×');
+    else if (e.key === '/') { e.preventDefault(); setOperator('÷'); }
+    else if (e.key === 'Enter' || e.key === '=') equals();
+    else if (e.key === 'Backspace') backspace();
+    else if (e.key === 'Escape') clearAll();
+    else if (e.key === '%') percent();
+  });
+
+  render();
+</script>
+
+</body>
+</html>
