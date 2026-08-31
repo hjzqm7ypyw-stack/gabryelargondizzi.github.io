@@ -1,15 +1,94 @@
-"""
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Banco de Dados | Gabryel Argondizzi</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:#0d1117;
+    color:#e6edf3;
+    font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    padding:40px 20px 60px;
+  }
+  .wrap{
+    max-width:820px;
+    margin:0 auto;
+  }
+  a.back{
+    color:#7aa2c4;
+    text-decoration:none;
+    font-size:13px;
+  }
+  a.back:hover{ color:#e6edf3; }
+  h1{
+    font-size:24px;
+    margin:18px 0 4px;
+  }
+  p.desc{
+    color:#9aa4b2;
+    font-size:14px;
+    margin:0 0 20px;
+    line-height:1.6;
+  }
+  .toolbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:8px;
+  }
+  .filename{
+    font-family:'Courier New',monospace;
+    font-size:13px;
+    color:#9aa4b2;
+  }
+  a.download{
+    font-size:13px;
+    color:#7aa2c4;
+    text-decoration:none;
+    border:1px solid #2a3340;
+    padding:5px 12px;
+    border-radius:5px;
+  }
+  a.download:hover{ background:#161c24; }
+  pre{
+    background:#111820;
+    border:1px solid #232b36;
+    border-radius:6px;
+    padding:18px 20px;
+    overflow-x:auto;
+    font-size:13px;
+    line-height:1.55;
+  }
+  code{
+    font-family:'Courier New',Consolas,monospace;
+    white-space:pre;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="index.html">&larr; voltar ao portfólio</a>
+  <h1>Banco de Dados</h1>
+  <p class="desc">Modelagem e gerenciamento de uma biblioteca de livros usando SQLite: criação de tabela, inserção, consultas por autor, atualização de status e remoção de registros.</p>
+  <div class="toolbar">
+    <span class="filename">banco_dados_biblioteca.py</span>
+    <a class="download" href="banco_dados_biblioteca.py" download>baixar .py</a>
+  </div>
+  <pre><code>&quot;&quot;&quot;
 Banco de Dados - Biblioteca
 -----------------------------
 Modelagem, consultas e gerenciamento de informações usando SQLite
 (banco de dados embutido, não precisa instalar servidor nenhum).
 
 Tabela: livros (id, titulo, autor, ano, lido)
-"""
+&quot;&quot;&quot;
 
 import sqlite3
 
-BANCO = "biblioteca.db"
+BANCO = &quot;biblioteca.db&quot;
 
 
 def conectar():
@@ -18,7 +97,7 @@ def conectar():
 
 def criar_tabela():
     with conectar() as conn:
-        conn.execute("""
+        conn.execute(&quot;&quot;&quot;
             CREATE TABLE IF NOT EXISTS livros (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 titulo TEXT NOT NULL,
@@ -26,51 +105,51 @@ def criar_tabela():
                 ano INTEGER,
                 lido INTEGER DEFAULT 0
             )
-        """)
+        &quot;&quot;&quot;)
 
 
 def adicionar_livro(titulo, autor, ano, lido=False):
     with conectar() as conn:
         conn.execute(
-            "INSERT INTO livros (titulo, autor, ano, lido) VALUES (?, ?, ?, ?)",
+            &quot;INSERT INTO livros (titulo, autor, ano, lido) VALUES (?, ?, ?, ?)&quot;,
             (titulo, autor, ano, int(lido)),
         )
 
 
 def listar_livros():
     with conectar() as conn:
-        cursor = conn.execute("SELECT id, titulo, autor, ano, lido FROM livros")
+        cursor = conn.execute(&quot;SELECT id, titulo, autor, ano, lido FROM livros&quot;)
         return cursor.fetchall()
 
 
 def buscar_por_autor(autor):
     with conectar() as conn:
         cursor = conn.execute(
-            "SELECT id, titulo, autor, ano, lido FROM livros WHERE autor LIKE ?",
-            (f"%{autor}%",),
+            &quot;SELECT id, titulo, autor, ano, lido FROM livros WHERE autor LIKE ?&quot;,
+            (f&quot;%{autor}%&quot;,),
         )
         return cursor.fetchall()
 
 
 def marcar_como_lido(id_livro):
     with conectar() as conn:
-        conn.execute("UPDATE livros SET lido = 1 WHERE id = ?", (id_livro,))
+        conn.execute(&quot;UPDATE livros SET lido = 1 WHERE id = ?&quot;, (id_livro,))
 
 
 def remover_livro(id_livro):
     with conectar() as conn:
-        conn.execute("DELETE FROM livros WHERE id = ?", (id_livro,))
+        conn.execute(&quot;DELETE FROM livros WHERE id = ?&quot;, (id_livro,))
 
 
 def imprimir_livros(livros):
     if not livros:
-        print("Nenhum livro encontrado.\n")
+        print(&quot;Nenhum livro encontrado.\n&quot;)
         return
-    print(f"\n{'ID':<4}{'Título':<25}{'Autor':<20}{'Ano':<6}{'Lido'}")
-    print("-" * 60)
+    print(f&quot;\n{&#x27;ID&#x27;:&lt;4}{&#x27;Título&#x27;:&lt;25}{&#x27;Autor&#x27;:&lt;20}{&#x27;Ano&#x27;:&lt;6}{&#x27;Lido&#x27;}&quot;)
+    print(&quot;-&quot; * 60)
     for id_, titulo, autor, ano, lido in livros:
-        status = "Sim" if lido else "Não"
-        print(f"{id_:<4}{titulo:<25}{autor:<20}{ano or '-':<6}{status}")
+        status = &quot;Sim&quot; if lido else &quot;Não&quot;
+        print(f&quot;{id_:&lt;4}{titulo:&lt;25}{autor:&lt;20}{ano or &#x27;-&#x27;:&lt;6}{status}&quot;)
     print()
 
 
@@ -78,49 +157,53 @@ def menu():
     criar_tabela()
 
     while True:
-        print("=== Banco de Dados - Biblioteca ===")
-        print("1. Adicionar livro")
-        print("2. Listar todos os livros")
-        print("3. Buscar por autor")
-        print("4. Marcar livro como lido")
-        print("5. Remover livro")
-        print("0. Sair")
+        print(&quot;=== Banco de Dados - Biblioteca ===&quot;)
+        print(&quot;1. Adicionar livro&quot;)
+        print(&quot;2. Listar todos os livros&quot;)
+        print(&quot;3. Buscar por autor&quot;)
+        print(&quot;4. Marcar livro como lido&quot;)
+        print(&quot;5. Remover livro&quot;)
+        print(&quot;0. Sair&quot;)
 
-        escolha = input("\nEscolha uma opção: ").strip()
+        escolha = input(&quot;\nEscolha uma opção: &quot;).strip()
 
-        if escolha == "1":
-            titulo = input("Título: ").strip()
-            autor = input("Autor: ").strip()
-            ano = input("Ano (opcional): ").strip()
+        if escolha == &quot;1&quot;:
+            titulo = input(&quot;Título: &quot;).strip()
+            autor = input(&quot;Autor: &quot;).strip()
+            ano = input(&quot;Ano (opcional): &quot;).strip()
             adicionar_livro(titulo, autor, int(ano) if ano.isdigit() else None)
-            print("\nLivro adicionado.\n")
+            print(&quot;\nLivro adicionado.\n&quot;)
 
-        elif escolha == "2":
+        elif escolha == &quot;2&quot;:
             imprimir_livros(listar_livros())
 
-        elif escolha == "3":
-            autor = input("Nome do autor: ").strip()
+        elif escolha == &quot;3&quot;:
+            autor = input(&quot;Nome do autor: &quot;).strip()
             imprimir_livros(buscar_por_autor(autor))
 
-        elif escolha == "4":
-            id_livro = input("ID do livro: ").strip()
+        elif escolha == &quot;4&quot;:
+            id_livro = input(&quot;ID do livro: &quot;).strip()
             if id_livro.isdigit():
                 marcar_como_lido(int(id_livro))
-                print("\nLivro marcado como lido.\n")
+                print(&quot;\nLivro marcado como lido.\n&quot;)
 
-        elif escolha == "5":
-            id_livro = input("ID do livro: ").strip()
+        elif escolha == &quot;5&quot;:
+            id_livro = input(&quot;ID do livro: &quot;).strip()
             if id_livro.isdigit():
                 remover_livro(int(id_livro))
-                print("\nLivro removido.\n")
+                print(&quot;\nLivro removido.\n&quot;)
 
-        elif escolha == "0":
-            print("Até mais!")
+        elif escolha == &quot;0&quot;:
+            print(&quot;Até mais!&quot;)
             break
 
         else:
-            print("\nOpção inválida.\n")
+            print(&quot;\nOpção inválida.\n&quot;)
 
 
-if __name__ == "__main__":
+if __name__ == &quot;__main__&quot;:
     menu()
+</code></pre>
+</div>
+</body>
+</html>
