@@ -1,146 +1,229 @@
-"""
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Sistema em Python | Gabryel Argondizzi</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:#0d1117;
+    color:#e6edf3;
+    font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    padding:40px 20px 60px;
+  }
+  .wrap{
+    max-width:820px;
+    margin:0 auto;
+  }
+  a.back{
+    color:#7aa2c4;
+    text-decoration:none;
+    font-size:13px;
+  }
+  a.back:hover{ color:#e6edf3; }
+  h1{
+    font-size:24px;
+    margin:18px 0 4px;
+  }
+  p.desc{
+    color:#9aa4b2;
+    font-size:14px;
+    margin:0 0 20px;
+    line-height:1.6;
+  }
+  .toolbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:8px;
+  }
+  .filename{
+    font-family:'Courier New',monospace;
+    font-size:13px;
+    color:#9aa4b2;
+  }
+  a.download{
+    font-size:13px;
+    color:#7aa2c4;
+    text-decoration:none;
+    border:1px solid #2a3340;
+    padding:5px 12px;
+    border-radius:5px;
+  }
+  a.download:hover{ background:#161c24; }
+  pre{
+    background:#111820;
+    border:1px solid #232b36;
+    border-radius:6px;
+    padding:18px 20px;
+    overflow-x:auto;
+    font-size:13px;
+    line-height:1.55;
+  }
+  code{
+    font-family:'Courier New',Consolas,monospace;
+    white-space:pre;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="index.html">&larr; voltar ao portfólio</a>
+  <h1>Sistema em Python</h1>
+  <p class="desc">Sistema de cadastro de contatos com operações de criar, listar, buscar, editar e remover, salvando os dados em um arquivo JSON local.</p>
+  <div class="toolbar">
+    <span class="filename">sistema_cadastro.py</span>
+    <a class="download" href="sistema_cadastro.py" download>baixar .py</a>
+  </div>
+  <pre><code>&quot;&quot;&quot;
 Sistema de Cadastro de Contatos
 --------------------------------
 CRUD simples (Criar, Ler, Atualizar, Deletar) que guarda os
 contatos em um arquivo JSON local, sem precisar de banco de dados.
-"""
+&quot;&quot;&quot;
 
 import json
 import os
 
-ARQUIVO = "contatos.json"
+ARQUIVO = &quot;contatos.json&quot;
 
 
 def carregar_contatos():
     if not os.path.exists(ARQUIVO):
         return []
-    with open(ARQUIVO, "r", encoding="utf-8") as f:
+    with open(ARQUIVO, &quot;r&quot;, encoding=&quot;utf-8&quot;) as f:
         return json.load(f)
 
 
 def salvar_contatos(contatos):
-    with open(ARQUIVO, "w", encoding="utf-8") as f:
+    with open(ARQUIVO, &quot;w&quot;, encoding=&quot;utf-8&quot;) as f:
         json.dump(contatos, f, ensure_ascii=False, indent=2)
 
 
 def proximo_id(contatos):
     if not contatos:
         return 1
-    return max(c["id"] for c in contatos) + 1
+    return max(c[&quot;id&quot;] for c in contatos) + 1
 
 
 def cadastrar(contatos):
-    nome = input("Nome: ").strip()
-    telefone = input("Telefone: ").strip()
-    email = input("E-mail: ").strip()
+    nome = input(&quot;Nome: &quot;).strip()
+    telefone = input(&quot;Telefone: &quot;).strip()
+    email = input(&quot;E-mail: &quot;).strip()
 
     contato = {
-        "id": proximo_id(contatos),
-        "nome": nome,
-        "telefone": telefone,
-        "email": email,
+        &quot;id&quot;: proximo_id(contatos),
+        &quot;nome&quot;: nome,
+        &quot;telefone&quot;: telefone,
+        &quot;email&quot;: email,
     }
     contatos.append(contato)
     salvar_contatos(contatos)
-    print(f"\nContato '{nome}' cadastrado com sucesso (id {contato['id']}).\n")
+    print(f&quot;\nContato &#x27;{nome}&#x27; cadastrado com sucesso (id {contato[&#x27;id&#x27;]}).\n&quot;)
 
 
 def listar(contatos):
     if not contatos:
-        print("\nNenhum contato cadastrado.\n")
+        print(&quot;\nNenhum contato cadastrado.\n&quot;)
         return
-    print("\nID  | Nome                 | Telefone       | E-mail")
-    print("-" * 60)
+    print(&quot;\nID  | Nome                 | Telefone       | E-mail&quot;)
+    print(&quot;-&quot; * 60)
     for c in contatos:
-        print(f"{c['id']:<4}| {c['nome']:<21}| {c['telefone']:<15}| {c['email']}")
+        print(f&quot;{c[&#x27;id&#x27;]:&lt;4}| {c[&#x27;nome&#x27;]:&lt;21}| {c[&#x27;telefone&#x27;]:&lt;15}| {c[&#x27;email&#x27;]}&quot;)
     print()
 
 
 def buscar(contatos):
-    termo = input("Buscar por nome: ").strip().lower()
-    encontrados = [c for c in contatos if termo in c["nome"].lower()]
+    termo = input(&quot;Buscar por nome: &quot;).strip().lower()
+    encontrados = [c for c in contatos if termo in c[&quot;nome&quot;].lower()]
     if not encontrados:
-        print("\nNenhum contato encontrado.\n")
+        print(&quot;\nNenhum contato encontrado.\n&quot;)
         return
     for c in encontrados:
-        print(f"\nID: {c['id']}\nNome: {c['nome']}\nTelefone: {c['telefone']}\nE-mail: {c['email']}\n")
+        print(f&quot;\nID: {c[&#x27;id&#x27;]}\nNome: {c[&#x27;nome&#x27;]}\nTelefone: {c[&#x27;telefone&#x27;]}\nE-mail: {c[&#x27;email&#x27;]}\n&quot;)
 
 
 def editar(contatos):
     try:
-        id_busca = int(input("ID do contato a editar: "))
+        id_busca = int(input(&quot;ID do contato a editar: &quot;))
     except ValueError:
-        print("\nID inválido.\n")
+        print(&quot;\nID inválido.\n&quot;)
         return
 
     for c in contatos:
-        if c["id"] == id_busca:
-            print("Deixe em branco para manter o valor atual.")
-            nome = input(f"Nome [{c['nome']}]: ").strip()
-            telefone = input(f"Telefone [{c['telefone']}]: ").strip()
-            email = input(f"E-mail [{c['email']}]: ").strip()
+        if c[&quot;id&quot;] == id_busca:
+            print(&quot;Deixe em branco para manter o valor atual.&quot;)
+            nome = input(f&quot;Nome [{c[&#x27;nome&#x27;]}]: &quot;).strip()
+            telefone = input(f&quot;Telefone [{c[&#x27;telefone&#x27;]}]: &quot;).strip()
+            email = input(f&quot;E-mail [{c[&#x27;email&#x27;]}]: &quot;).strip()
 
             if nome:
-                c["nome"] = nome
+                c[&quot;nome&quot;] = nome
             if telefone:
-                c["telefone"] = telefone
+                c[&quot;telefone&quot;] = telefone
             if email:
-                c["email"] = email
+                c[&quot;email&quot;] = email
 
             salvar_contatos(contatos)
-            print("\nContato atualizado.\n")
+            print(&quot;\nContato atualizado.\n&quot;)
             return
 
-    print("\nContato não encontrado.\n")
+    print(&quot;\nContato não encontrado.\n&quot;)
 
 
 def remover(contatos):
     try:
-        id_busca = int(input("ID do contato a remover: "))
+        id_busca = int(input(&quot;ID do contato a remover: &quot;))
     except ValueError:
-        print("\nID inválido.\n")
+        print(&quot;\nID inválido.\n&quot;)
         return
 
     for c in contatos:
-        if c["id"] == id_busca:
-            confirmacao = input(f"Remover '{c['nome']}'? (s/n): ").strip().lower()
-            if confirmacao == "s":
+        if c[&quot;id&quot;] == id_busca:
+            confirmacao = input(f&quot;Remover &#x27;{c[&#x27;nome&#x27;]}&#x27;? (s/n): &quot;).strip().lower()
+            if confirmacao == &quot;s&quot;:
                 contatos.remove(c)
                 salvar_contatos(contatos)
-                print("\nContato removido.\n")
+                print(&quot;\nContato removido.\n&quot;)
             return
 
-    print("\nContato não encontrado.\n")
+    print(&quot;\nContato não encontrado.\n&quot;)
 
 
 def menu():
     contatos = carregar_contatos()
 
     opcoes = {
-        "1": ("Cadastrar contato", cadastrar),
-        "2": ("Listar contatos", listar),
-        "3": ("Buscar contato", buscar),
-        "4": ("Editar contato", editar),
-        "5": ("Remover contato", remover),
+        &quot;1&quot;: (&quot;Cadastrar contato&quot;, cadastrar),
+        &quot;2&quot;: (&quot;Listar contatos&quot;, listar),
+        &quot;3&quot;: (&quot;Buscar contato&quot;, buscar),
+        &quot;4&quot;: (&quot;Editar contato&quot;, editar),
+        &quot;5&quot;: (&quot;Remover contato&quot;, remover),
     }
 
     while True:
-        print("=== Sistema de Cadastro de Contatos ===")
+        print(&quot;=== Sistema de Cadastro de Contatos ===&quot;)
         for chave, (texto, _) in opcoes.items():
-            print(f"{chave}. {texto}")
-        print("0. Sair")
+            print(f&quot;{chave}. {texto}&quot;)
+        print(&quot;0. Sair&quot;)
 
-        escolha = input("\nEscolha uma opção: ").strip()
+        escolha = input(&quot;\nEscolha uma opção: &quot;).strip()
 
-        if escolha == "0":
-            print("Até mais!")
+        if escolha == &quot;0&quot;:
+            print(&quot;Até mais!&quot;)
             break
         elif escolha in opcoes:
             _, funcao = opcoes[escolha]
             funcao(contatos)
         else:
-            print("\nOpção inválida.\n")
+            print(&quot;\nOpção inválida.\n&quot;)
 
 
-if __name__ == "__main__":
+if __name__ == &quot;__main__&quot;:
     menu()
+</code></pre>
+</div>
+</body>
+</html>
